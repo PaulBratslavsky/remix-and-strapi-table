@@ -1,9 +1,7 @@
 import pkg from "@material-tailwind/react";
 
 import { PencilIcon } from "@heroicons/react/24/solid";
-import {
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 const {
   Card,
   CardHeader,
@@ -17,47 +15,16 @@ const {
   Input,
 } = pkg;
 
-const TABLE_HEAD = ["Debt Name", "Amount", "Date", "Status", "Description", ""];
-
-const TABLE_ROWS = [
-  {
-    name: "Spotify",
-    amount: "$2,500",
-    date: "06/2026",
-    status: "paid",
-    description: "visa",
-  },
-  {
-    name: "Amazon",
-    amount: "$5,000",
-    date: "06/2026",
-    status: "paid",
-    description: "master-card",
-  },
-  {
-    name: "Pinterest",
-    amount: "$3,400",
-    date: "06/2026",
-    status: "current",
-    description: "master-card",
-  },
-  {
-    name: "Google",
-    amount: "$1,000",
-    date: "06/2026",
-    status: "paid",
-    description: "visa",
-  },
-  {
-    name: "netflix",
-    amount: "$14,000",
-    date: "06/2026",
-    status: "not started",
-    description: "visa",
-  },
-];
-
-export default function Table() {
+export default function Table({ data }: any) {
+  const TABLE_HEAD = [
+    "Debt Name",
+    "Amount",
+    "Date",
+    "Status",
+    "Description",
+    "",
+  ];
+  const TABLE_ROWS = data.data;
   return (
     <Card className="h-full w-full">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -67,7 +34,7 @@ export default function Table() {
               Debt Tracker
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              These are details your debt
+              These are details about your debt
             </Typography>
           </div>
           <div className="flex w-full shrink-0 gap-2 md:w-max">
@@ -104,93 +71,85 @@ export default function Table() {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(
-              (
-                {
-                  name,
-                  amount,
-                  date,
-                  status,
-                  description,
-                },
-                index
-              ) => {
-                const isLast = index === TABLE_ROWS.length - 1;
-                const classes = isLast
-                  ? "p-4"
-                  : "p-4 border-b border-blue-gray-50";
+            {TABLE_ROWS.map((item: any, index: number) => {
+              const isLast = index === TABLE_ROWS.length - 1;
+              const classes = isLast
+                ? "p-4"
+                : "p-4 border-b border-blue-gray-50";
 
-                return (
-                  <tr key={name}>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
+              console.log(item);
+              const { name, amount, date, status, description } =
+                item.attributes;
+              return (
+                <tr key={name}>
+                  <td className={classes}>
+                    <div className="flex items-center gap-3">
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-bold"
+                      >
+                        {name}
+                      </Typography>
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {amount}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <Typography
+                      variant="small"
+                      color="blue-gray"
+                      className="font-normal"
+                    >
+                      {date}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <div className="w-max">
+                      <Chip
+                        size="sm"
+                        variant="ghost"
+                        value={status}
+                        color={
+                          status === "paid"
+                            ? "green"
+                            : status === "current"
+                            ? "amber"
+                            : "red"
+                        }
+                      />
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <div className="flex items-center gap-3">
+                      <div className="flex flex-col">
                         <Typography
                           variant="small"
                           color="blue-gray"
-                          className="font-bold"
+                          className="font-normal capitalize"
                         >
-                          {name}
+                          {description}
                         </Typography>
                       </div>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {amount}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {date}
-                      </Typography>
-                    </td>
-                    <td className={classes}>
-                      <div className="w-max">
-                        <Chip
-                          size="sm"
-                          variant="ghost"
-                          value={status}
-                          color={
-                            status === "paid"
-                              ? "green"
-                              : status === "current"
-                              ? "amber"
-                              : "red"
-                          }
-                        />
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <div className="flex items-center gap-3">
-                        <div className="flex flex-col">
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal capitalize"
-                          >
-                            {description}
-                          </Typography>
-                        </div>
-                      </div>
-                    </td>
-                    <td className={classes}>
-                      <Tooltip content="Edit User">
-                        <IconButton variant="text">
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
+                    </div>
+                  </td>
+                  <td className={classes}>
+                    <Tooltip content="Edit User">
+                      <IconButton variant="text">
+                        <PencilIcon className="h-4 w-4" />
+                      </IconButton>
+                    </Tooltip>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </CardBody>
