@@ -2,7 +2,6 @@ import pkg from "@material-tailwind/react";
 
 import { PencilIcon } from "@heroicons/react/24/solid";
 import {
-  ArrowDownTrayIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 const {
@@ -13,59 +12,48 @@ const {
   CardBody,
   Chip,
   CardFooter,
-  Avatar,
   IconButton,
   Tooltip,
   Input,
 } = pkg;
 
-const TABLE_HEAD = ["Transaction", "Amount", "Date", "Status", "Account", ""];
+const TABLE_HEAD = ["Debt Name", "Amount", "Date", "Status", "Description", ""];
 
 const TABLE_ROWS = [
   {
     name: "Spotify",
     amount: "$2,500",
-    date: "Wed 3:00pm",
+    date: "06/2026",
     status: "paid",
-    account: "visa",
-    accountNumber: "1234",
-    expiry: "06/2026",
+    description: "visa",
   },
   {
     name: "Amazon",
     amount: "$5,000",
-    date: "Wed 1:00pm",
+    date: "06/2026",
     status: "paid",
-    account: "master-card",
-    accountNumber: "1234",
-    expiry: "06/2026",
+    description: "master-card",
   },
   {
     name: "Pinterest",
     amount: "$3,400",
-    date: "Mon 7:40pm",
-    status: "pending",
-    account: "master-card",
-    accountNumber: "1234",
-    expiry: "06/2026",
+    date: "06/2026",
+    status: "current",
+    description: "master-card",
   },
   {
     name: "Google",
     amount: "$1,000",
-    date: "Wed 5:00pm",
+    date: "06/2026",
     status: "paid",
-    account: "visa",
-    accountNumber: "1234",
-    expiry: "06/2026",
+    description: "visa",
   },
   {
     name: "netflix",
     amount: "$14,000",
-    date: "Wed 3:30am",
-    status: "cancelled",
-    account: "visa",
-    accountNumber: "1234",
-    expiry: "06/2026",
+    date: "06/2026",
+    status: "not started",
+    description: "visa",
   },
 ];
 
@@ -76,10 +64,10 @@ export default function Table() {
         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
           <div>
             <Typography variant="h5" color="blue-gray">
-              Recent Transactions
+              Debt Tracker
             </Typography>
             <Typography color="gray" className="mt-1 font-normal">
-              These are details about the last transactions
+              These are details your debt
             </Typography>
           </div>
           <div className="flex w-full shrink-0 gap-2 md:w-max">
@@ -123,9 +111,7 @@ export default function Table() {
                   amount,
                   date,
                   status,
-                  account,
-                  accountNumber,
-                  expiry,
+                  description,
                 },
                 index
               ) => {
@@ -174,7 +160,7 @@ export default function Table() {
                           color={
                             status === "paid"
                               ? "green"
-                              : status === "pending"
+                              : status === "current"
                               ? "amber"
                               : "red"
                           }
@@ -183,33 +169,13 @@ export default function Table() {
                     </td>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
-                        <div className="h-9 w-12 rounded-md border border-blue-gray-50 p-1">
-                          <Avatar
-                            src={
-                              account === "visa"
-                                ? "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/logos/visa.png"
-                                : "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/logos/mastercard.png"
-                            }
-                            size="sm"
-                            alt={account}
-                            variant="square"
-                            className="h-full w-full object-contain p-1"
-                          />
-                        </div>
                         <div className="flex flex-col">
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-normal capitalize"
                           >
-                            {account.split("-").join(" ")} {accountNumber}
-                          </Typography>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-normal opacity-70"
-                          >
-                            {expiry}
+                            {description}
                           </Typography>
                         </div>
                       </div>
